@@ -57,7 +57,7 @@ public class LoginBacking {
         }
 
        // TODO -1
-      this.password = null ;
+
     }
 
     private AuthenticationStatus continueAuthentication() {
