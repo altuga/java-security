@@ -1,0 +1,5 @@
+de/rieckpil/blog/LogoutBacking.class
+de/rieckpil/blog/security/ApplicationConfig.class
+de/rieckpil/blog/LoginBacking.class
+de/rieckpil/blog/security/CustomInMemoryIdentityStore.class
+de/rieckpil/blog/LoginBacking$1.class
