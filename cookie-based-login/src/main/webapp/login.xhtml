@@ -35,7 +35,7 @@
                             <p:selectBooleanCheckbox type="rememberme" id="rememberme" value="#{loginBacking.rememberme}"/>
                             <p:message for="rememberme"/>
 
-                            <p:commandButton id="submit" update="@form" value="Login" action="#{loginBacking.submit}"/>
+                            <p:commandButton ajax="false" id="submit" update="@form" value="Login" action="#{loginBacking.submit}"/>
                         </h:panelGrid>
                     </h:form>
                 </div>

@@ -43,13 +43,13 @@ public class LoginBacking {
 
 
     public LoginBacking() {
-       // checkCookie();
+        checkCookie();
     }
 
     public void submit() throws IOException {
 
         FacesContext fc = FacesContext.getCurrentInstance();
-        HttpServletResponse  response= ((HttpServletResponse) (fc.getExternalContext().getResponse()));
+
 
 
         switch (continueAuthentication()) {
@@ -61,14 +61,13 @@ public class LoginBacking {
                         new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login failed", null));
                 break;
             case SUCCESS:
-                facesContext.addMessage(null,
-                        new FacesMessage(FacesMessage.SEVERITY_INFO, "Login succeed", null));
-                externalContext.redirect(externalContext.getRequestContextPath() + "/app/index.xhtml");
 
                 if(rememberme) {
                     putCookie();
                 }
-                response.flushBuffer();
+
+                externalContext.redirect(externalContext.getRequestContextPath() + "/app/index.xhtml");
+
 
                 break;
             case NOT_DONE:
@@ -128,9 +127,9 @@ public class LoginBacking {
         //cPassword.setMaxAge(3600);
         //cRememberme.setMaxAge(3600);
 
-        cEmail.setDomain("/");
-        cPassword.setDomain("/");
-        cRememberme.setDomain("/");
+        cEmail.setDomain(request.getContextPath());
+        cPassword.setDomain(request.getContextPath());
+        cRememberme.setDomain(request.getContextPath());
 
         response.addCookie(cEmail);
         response.addCookie(cPassword);
