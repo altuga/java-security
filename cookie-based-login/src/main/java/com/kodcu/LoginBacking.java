@@ -17,6 +17,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.io.IOException;
+import java.util.Map;
 
 @Named
 @RequestScoped
@@ -42,10 +43,14 @@ public class LoginBacking {
 
 
     public LoginBacking() {
-        checkCookie();
+       // checkCookie();
     }
 
     public void submit() throws IOException {
+
+        FacesContext fc = FacesContext.getCurrentInstance();
+        HttpServletResponse  response= ((HttpServletResponse) (fc.getExternalContext().getResponse()));
+
 
         switch (continueAuthentication()) {
             case SEND_CONTINUE:
@@ -63,6 +68,7 @@ public class LoginBacking {
                 if(rememberme) {
                     putCookie();
                 }
+                response.flushBuffer();
 
                 break;
             case NOT_DONE:
@@ -76,11 +82,19 @@ public class LoginBacking {
 
         FacesContext fc = FacesContext.getCurrentInstance();
         Cookie[] cookiesArr = ((HttpServletRequest) (fc.getExternalContext().getRequest())).getCookies();
-        if (cookiesArr != null && cookiesArr.length > 0)
+
+        Map<String, Object> requestCookieMap = FacesContext.getCurrentInstance()
+                .getExternalContext()
+                .getRequestCookieMap();
+
+        requestCookieMap.keySet();
+        requestCookieMap.values();
+
+        if (cookiesArr != null && cookiesArr.length > 0) {
             for (int i = 0; i < cookiesArr.length; i++) {
                 String cName = cookiesArr[i].getName();
                 String cValue = cookiesArr[i].getValue();
-                System.out.println(" cName " + cName  + " cValue "  + cValue);
+                System.out.println(" cName " + cName + " cValue " + cValue);
                 if (cName.equals("email")) {
                     setEmail(cValue);
                 } else if (cName.equals("password")) {
@@ -97,22 +111,30 @@ public class LoginBacking {
                     }
                 }
             }
+        }
     }
 
 
     private void putCookie() {
         FacesContext fc = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+        HttpServletResponse response = ((HttpServletResponse) (fc.getExternalContext().getResponse()));
 
         String virtualCheck = "true";
         Cookie cEmail = new Cookie("email", email);
         Cookie cPassword = new Cookie("password", password);
         Cookie cRememberme = new Cookie("rememberme", virtualCheck);
-        cEmail.setMaxAge(3600);
-        cPassword.setMaxAge(3600);
-        cRememberme.setMaxAge(3600);
-        ((HttpServletResponse) (fc.getExternalContext().getResponse())).addCookie(cEmail);
-        ((HttpServletResponse) (fc.getExternalContext().getResponse())).addCookie(cPassword);
+        //cEmail.setMaxAge(3600);
+        //cPassword.setMaxAge(3600);
+        //cRememberme.setMaxAge(3600);
 
+        cEmail.setDomain("/");
+        cPassword.setDomain("/");
+        cRememberme.setDomain("/");
+
+        response.addCookie(cEmail);
+        response.addCookie(cPassword);
+        response.addCookie(cRememberme);
 
     }
 
