@@ -48,9 +48,6 @@ public class LoginBacking {
 
     public void submit() throws IOException {
 
-        FacesContext fc = FacesContext.getCurrentInstance();
-
-
 
         switch (continueAuthentication()) {
             case SEND_CONTINUE:
@@ -82,13 +79,6 @@ public class LoginBacking {
         FacesContext fc = FacesContext.getCurrentInstance();
         Cookie[] cookiesArr = ((HttpServletRequest) (fc.getExternalContext().getRequest())).getCookies();
 
-        Map<String, Object> requestCookieMap = FacesContext.getCurrentInstance()
-                .getExternalContext()
-                .getRequestCookieMap();
-
-        requestCookieMap.keySet();
-        requestCookieMap.values();
-
         if (cookiesArr != null && cookiesArr.length > 0) {
             for (int i = 0; i < cookiesArr.length; i++) {
                 String cName = cookiesArr[i].getName();
@@ -116,24 +106,19 @@ public class LoginBacking {
 
     private void putCookie() {
         FacesContext fc = FacesContext.getCurrentInstance();
-        HttpServletRequest request = (HttpServletRequest) facesContext.getExternalContext().getRequest();
+
         HttpServletResponse response = ((HttpServletResponse) (fc.getExternalContext().getResponse()));
 
         String virtualCheck = "true";
         Cookie cEmail = new Cookie("email", email);
         Cookie cPassword = new Cookie("password", password);
         Cookie cRememberme = new Cookie("rememberme", virtualCheck);
-        //cEmail.setMaxAge(3600);
-        //cPassword.setMaxAge(3600);
-        //cRememberme.setMaxAge(3600);
 
-        cEmail.setDomain(request.getContextPath());
-        cPassword.setDomain(request.getContextPath());
-        cRememberme.setDomain(request.getContextPath());
 
         response.addCookie(cEmail);
         response.addCookie(cPassword);
         response.addCookie(cRememberme);
+
 
     }
 
