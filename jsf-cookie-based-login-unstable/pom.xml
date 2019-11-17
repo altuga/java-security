@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.itcuties.examples.webapps</groupId>
-  <artifactId>jsf2-filter-login</artifactId>
+  <groupId>com.kodcu</groupId>
+  <artifactId>login-unstable</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
-  <name>jsf2-filter-login</name>
-  <url>http://www.itcuties.com</url>
+  <name>login-unstable</name>
+  <url>http://www.kodcu.com</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -35,6 +35,6 @@
 		</dependency>
 	</dependencies>
   <build>
-    <finalName>jsf2-filter-login</finalName>
+    <finalName>login-unstable</finalName>
   </build>
 </project>
