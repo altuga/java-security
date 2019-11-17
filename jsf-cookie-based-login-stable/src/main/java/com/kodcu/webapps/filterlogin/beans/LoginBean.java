@@ -6,6 +6,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
@@ -91,10 +92,30 @@ public class LoginBean implements Serializable {
         FacesContext fc = FacesContext.getCurrentInstance();
 
         HttpServletResponse response = ((HttpServletResponse) (fc.getExternalContext().getResponse()));
+		HttpServletRequest request = ((HttpServletRequest) (fc.getExternalContext().getRequest()));
         HttpSession session = (HttpSession) (fc.getExternalContext().getSession(false));
         session.setAttribute(username, "");
+
+		Cookie cUsername = new Cookie("username", "");
+		cUsername.setMaxAge(0);
+		cUsername.setPath("/login-stable");
+		cUsername.setDomain("localhost");
+
         Cookie cRandomKey = new Cookie("randomKey", "");
+		cRandomKey.setMaxAge(0);
+		cRandomKey.setPath("/login-stable");
+		cRandomKey.setDomain("localhost");
+
+
         Cookie cRememberme = new Cookie("rememberme", "");
+		cRememberme.setMaxAge(0);
+		cRememberme.setPath("/login-stable");
+		cRememberme.setDomain("localhost");
+
+		response.addCookie(cUsername);
+		response.addCookie(cRandomKey);
+		response.addCookie(cRememberme);
+
 		
 		return navigationBean.toLogin();
 	}
