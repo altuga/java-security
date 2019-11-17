@@ -98,34 +98,25 @@ public class LoginBean implements Serializable {
 
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				if (cookie.getName().equals("username")) {
-					cookie.setValue(null);
-					cookie.setMaxAge(0);
-					cookie.setDomain("localhost");
-					cookie.setPath("/login-unstable");
-					response.addCookie(cookie);
 
+			for (Cookie cookie : cookies) {
+				cookie.setValue(null);
+				cookie.setMaxAge(0);
+				cookie.setDomain("localhost");
+				cookie.setPath("/login-unstable");
+				if (cookie.getName().equals("username")) {
+					response.addCookie(cookie);
 				}
 				if (cookie.getName().equals("password")) {
-					cookie.setValue(null);
-					cookie.setMaxAge(0);
-					cookie.setDomain("localhost");
-					cookie.setPath("/login-unstable");
 					response.addCookie(cookie);
 				}
 				if (cookie.getName().equals("cRememberme")) {
-					cookie.setValue(null);
-					cookie.setMaxAge(0);
-					cookie.setDomain("localhost");
-					cookie.setPath("/login-unstable");
+
 					response.addCookie(cookie);
 				}
 			}
 
 		}
-
-
 
 
 		return navigationBean.toLogin();
