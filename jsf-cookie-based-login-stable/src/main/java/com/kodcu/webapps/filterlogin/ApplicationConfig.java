@@ -1,4 +1,4 @@
-package com.itcuties.examples.webapps.filterlogin;
+package com.kodcu.webapps.filterlogin;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.annotation.FacesConfig;

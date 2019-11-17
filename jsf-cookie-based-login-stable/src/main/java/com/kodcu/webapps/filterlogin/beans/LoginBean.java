@@ -1,8 +1,5 @@
-package com.itcuties.examples.webapps.filterlogin.beans;
+package com.kodcu.webapps.filterlogin.beans;
 
-import javax.annotation.ManagedBean;
-import javax.annotation.Resource;
-import javax.ejb.SessionContext;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -11,7 +8,6 @@ import javax.inject.Named;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
 import java.io.Serializable;
 
 

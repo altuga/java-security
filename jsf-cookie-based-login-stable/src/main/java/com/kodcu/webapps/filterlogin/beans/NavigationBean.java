@@ -1,4 +1,4 @@
-package com.itcuties.examples.webapps.filterlogin.beans;
+package com.kodcu.webapps.filterlogin.beans;
 
 import java.io.Serializable;
 

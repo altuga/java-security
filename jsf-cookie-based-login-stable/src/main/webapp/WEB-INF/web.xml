@@ -10,7 +10,7 @@
 	<!-- Login filter -->
 	<filter>
 		<filter-name>LoginFilter</filter-name>
-		<filter-class>com.itcuties.examples.webapps.filterlogin.filters.LoginFilter</filter-class>
+		<filter-class>com.kodcu.webapps.filterlogin.filters.LoginFilter</filter-class>
 	</filter>
 	<!-- Set the login filter to secure all the pages in the /secured/* path of the application  -->
 	<filter-mapping>

@@ -1,8 +1,7 @@
-package com.itcuties.examples.webapps.filterlogin.filters;
+package com.kodcu.webapps.filterlogin.filters;
 
-import com.itcuties.examples.webapps.filterlogin.beans.LoginBean;
+import com.kodcu.webapps.filterlogin.beans.LoginBean;
 
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
