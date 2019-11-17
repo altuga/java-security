@@ -95,6 +95,7 @@ public class LoginBean implements Serializable {
 		HttpServletRequest request = ((HttpServletRequest) (fc.getExternalContext().getRequest()));
 
 
+
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
