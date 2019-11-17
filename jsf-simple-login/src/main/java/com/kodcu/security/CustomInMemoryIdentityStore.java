@@ -1,4 +1,4 @@
-package de.rieckpil.blog.security;
+package com.kodcu.security;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.security.enterprise.credential.Credential;

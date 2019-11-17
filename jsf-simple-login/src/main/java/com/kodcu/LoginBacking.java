@@ -1,4 +1,4 @@
-package de.rieckpil.blog;
+package com.kodcu;
 
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
