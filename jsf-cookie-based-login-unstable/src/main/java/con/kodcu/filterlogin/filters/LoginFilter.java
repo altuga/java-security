@@ -1,14 +1,14 @@
-package com.itcuties.examples.webapps.filterlogin.filters;
+package con.kodcu.filterlogin.filters;
 
-import com.itcuties.examples.webapps.filterlogin.beans.LoginBean;
+import con.kodcu.filterlogin.beans.LoginBean;
+import con.kodcu.filterlogin.utility.CredentialController;
 
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.inject.Named;
 import javax.servlet.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -22,6 +22,10 @@ public class LoginFilter implements Filter {
 
 	@Inject
 	LoginBean loginBean;
+
+	@Named
+	@Inject
+	private CredentialController credentialController;
 
 	/**
 	 * Checks if user is logged in. If not it redirects to the login.xhtml page.
@@ -45,17 +49,17 @@ public class LoginFilter implements Filter {
 
 	private boolean haveCorrectCookie(ServletRequest requestC) {
 
-		if (loginBean!=null &&  !loginBean.getRememberme()) {
+		if (loginBean!=null && !loginBean.getRememberme()  ) {
 			// no need to check session and because remember me is not checked
 			return true;
 		}
 
 		HttpServletRequest request = (HttpServletRequest) requestC;
-		HttpSession session = request.getSession();
+
 		Cookie[] cookiesArr = request.getCookies();
 
 		String usernameFromCookie = null;
-		String randomKeyFromCookie = null;
+		String passwordFromCookie = null;
 
 		// control that if the values
 		//07
@@ -66,28 +70,22 @@ public class LoginFilter implements Filter {
 				System.out.println(" cName " + cName + " cValue " + cValue);
 				if (cName.equals("username")) {
 					usernameFromCookie = cValue;
-				} else if (cName.equals("randomKey")) {
-					randomKeyFromCookie = cValue;
+				} else if (cName.equals("password")) {
+					passwordFromCookie = cValue;
 				}
 			}
 		}
 
-		//08
-		if (usernameFromCookie != null && randomKeyFromCookie != null) {
+
+		if (usernameFromCookie != null && passwordFromCookie != null) {
 
 			// check session if user has randomKey
 
-			String usernameFromSession = (String) session.getAttribute("username");
-			String randomKeyFromSession = (String) session.getAttribute("randomKey");
-
-
-			if (usernameFromCookie != null && usernameFromCookie.equalsIgnoreCase(usernameFromSession)
-			 && (randomKeyFromCookie != null) && (randomKeyFromCookie.equalsIgnoreCase(randomKeyFromSession))) {
+			if (credentialController.isUserCredentialAreOkay(usernameFromCookie, passwordFromCookie))
 
 				loginBean.setLoggedIn(true); // a little hack
 				// we found the user in session and cookie is matching
 				return true;
-
 			}
 
 			// no way , sorry guys.
@@ -96,9 +94,6 @@ public class LoginFilter implements Filter {
 
 		}
 
-		// default
-		return false;
-	}
 
 	public void init(FilterConfig config) throws ServletException {
 		// Nothing to do here!

@@ -1,17 +1,16 @@
-package com.itcuties.examples.webapps.filterlogin.beans;
+package con.kodcu.filterlogin.beans;
 
-import javax.annotation.ManagedBean;
-import javax.annotation.Resource;
-import javax.ejb.SessionContext;
+import con.kodcu.filterlogin.utility.CredentialController;
+
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
 import java.io.Serializable;
 
 
@@ -26,12 +25,13 @@ public class LoginBean implements Serializable {
 
 	private static final long serialVersionUID = 7765876811740798583L;
 
-	// Simple user database :)
-	private static final String[] users = {"anna:qazwsx","kate:123456"};
+	@Named("credentialController")
+	@Inject
+	private CredentialController credentialController;
 	
 	private String username;
 	private String password;
-    private Boolean rememberme = false;
+	private Boolean rememberme = true;
 	
 	private boolean loggedIn;
 
@@ -39,6 +39,7 @@ public class LoginBean implements Serializable {
     @Named("navigationBean")
     @Inject
     private NavigationBean navigationBean;
+
 
 
 
@@ -52,12 +53,9 @@ public class LoginBean implements Serializable {
 	    //01
 
 		// Get every user from our sample database :)
-		for (String user: users) {
-			String dbUsername = user.split(":")[0];
-			String dbPassword = user.split(":")[1];
-			
-			// Successful login
-			if (dbUsername.equals(username) && dbPassword.equals(password)) {
+
+		// Successful login
+		if (credentialController.isUserCredentialAreOkay(username, password)) {
 			    //02
 				loggedIn = true;
 
@@ -65,9 +63,9 @@ public class LoginBean implements Serializable {
 				    putCookie();
                 }
 				return navigationBean.redirectToWelcome();
-			}
 		}
-		
+
+
 		// Set login ERROR
 		FacesMessage msg = new FacesMessage("Login error!", "ERROR MSG");
         msg.setSeverity(FacesMessage.SEVERITY_ERROR);
@@ -93,13 +91,42 @@ public class LoginBean implements Serializable {
 
 		// reset cookie and session
         FacesContext fc = FacesContext.getCurrentInstance();
-
         HttpServletResponse response = ((HttpServletResponse) (fc.getExternalContext().getResponse()));
-        HttpSession session = (HttpSession) (fc.getExternalContext().getSession(false));
-        session.setAttribute(username, "");
-        Cookie cRandomKey = new Cookie("randomKey", "");
-        Cookie cRememberme = new Cookie("rememberme", "");
-		
+		HttpServletRequest request = ((HttpServletRequest) (fc.getExternalContext().getRequest()));
+
+
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("username")) {
+					cookie.setValue(null);
+					cookie.setMaxAge(0);
+					cookie.setDomain("localhost");
+					cookie.setPath("/login-unstable");
+					response.addCookie(cookie);
+
+				}
+				if (cookie.getName().equals("password")) {
+					cookie.setValue(null);
+					cookie.setMaxAge(0);
+					cookie.setDomain("localhost");
+					cookie.setPath("/login-unstable");
+					response.addCookie(cookie);
+				}
+				if (cookie.getName().equals("cRememberme")) {
+					cookie.setValue(null);
+					cookie.setMaxAge(0);
+					cookie.setDomain("localhost");
+					cookie.setPath("/login-unstable");
+					response.addCookie(cookie);
+				}
+			}
+
+		}
+
+
+
+
 		return navigationBean.toLogin();
 	}
 
@@ -111,22 +138,20 @@ public class LoginBean implements Serializable {
         HttpSession session = (HttpSession) (fc.getExternalContext().getSession(false));
 
         String virtualCheck = "true";
-        Cookie cEmail = new Cookie("username", username);
-        // Generate random pass
+
+		// Generate random pass
         // put into session
 
 
-        // 03
-        session.setAttribute("username", username);
-        session.setAttribute("randomKey", "1234567");
-
         // 04
-        Cookie cRandomKey = new Cookie("randomKey", "1234567");
-        Cookie cRememberme = new Cookie("rememberme", virtualCheck);
+		Cookie cUsername = new Cookie("username", username);
+		Cookie cPassword = new Cookie("password", password);
+		Cookie cRememberme = new Cookie("cRememberme", virtualCheck);
 
 
-        response.addCookie(cEmail);
-        response.addCookie(cRandomKey); // no more password
+		response.addCookie(cUsername);
+		response.addCookie(cPassword);
+		response.addCookie(cPassword);
         response.addCookie(cRememberme);
 
 
