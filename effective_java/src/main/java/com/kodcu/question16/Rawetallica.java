@@ -14,12 +14,14 @@ TODO
 
 public class Rawetallica {
 
+
     public static void main(String[] args) {
         List<String> strings = new ArrayList<>();
         add(strings, Integer.valueOf(42));
         String s = strings.get(0); // Has compiler-generated cast
     }
 
+    @SuppressWarnings("unchecked")
     private static void add(List list, Object o) {
         list.add(o);
     }
