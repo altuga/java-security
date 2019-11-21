@@ -1,4 +1,4 @@
-package com.algaworks.upload.controller;
+package com.kodcu.upload.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,10 +12,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import com.kodcu.upload.util.UtilityFile;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
-
-import com.algaworks.upload.util.UtilityFile;
 
 @ManagedBean
 @ViewScoped
