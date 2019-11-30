@@ -22,6 +22,9 @@ public class Rawetallica {
     }
 
 
+
+
+    @SuppressWarnings("unchecked")
     private static void add(List list, Object o) {
         list.add(o);
     }
