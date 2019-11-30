@@ -56,7 +56,7 @@ public class LoginBacking {
             case NOT_DONE:
         }
 
-       // TODO -1
+       this.password = null ;
 
     }
 

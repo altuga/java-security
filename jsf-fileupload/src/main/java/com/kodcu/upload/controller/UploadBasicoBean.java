@@ -42,7 +42,7 @@ public class UploadBasicoBean implements Serializable {
             // TODO 2 : don't accept html file
 
 
-            File file = UtilityFile.write(uploadedFile.getFileName(), uploadedFile.getContents());
+            File file = (File)UtilityFile.write(uploadedFile.getFileName(), uploadedFile.getContents());
 
             
             fileArrayList.add(file);
