@@ -24,10 +24,15 @@ TODO:
 public class Money {
 
     public static void main(String[] args) {
-        double funds = 1.00;
+        BigDecimal funds = new BigDecimal("1.00");
+
+        BigDecimal TEN_CENT = new BigDecimal("0.10");
         int itemsBought = 0;
-        for (double price = 0.10; funds >= price; price += 0.10) {
-            funds -= price;
+
+        for (BigDecimal price = new BigDecimal("0.10");
+                funds.compareTo(price) >= 0; price = price.add(TEN_CENT) ) {
+
+            funds = funds.subtract(price) ;
             itemsBought++;
         }
         System.out.println(itemsBought + " items bought.");
