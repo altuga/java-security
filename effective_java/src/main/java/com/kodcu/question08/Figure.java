@@ -19,10 +19,10 @@ TODO:
  5 - Refactor and ask questions 
 */
 class Figure {
-    enum Shape { RECTANGLE, CIRCLE  };
+    enum Shape { RECTANGLE, CIRCLE, SQUARE  };
 
     // Tag field - the shape of this figure
-    final Shape shape;
+     Shape shape;
 
     // These fields are used only if shape is RECTANGLE
     double length;
@@ -42,6 +42,10 @@ class Figure {
         shape = Shape.RECTANGLE;
         this.length = length;
         this.width = width;
+        if (length == width) {
+            shape = Shape.SQUARE;
+        }
+
     }
 
     double area() {
@@ -50,13 +54,15 @@ class Figure {
                 return length * width;
             case CIRCLE:
                 return Math.PI * (radius * radius);
+            case SQUARE:
+                return length * width * 1.5;
             default:
                 throw new AssertionError(shape);
         }
     }
 
     public static void main(String[] args) {
-        Figure figure = new Figure(3,4);
+        Figure figure = new Figure(3,3);
         System.out.println(figure.area());
 
     }
