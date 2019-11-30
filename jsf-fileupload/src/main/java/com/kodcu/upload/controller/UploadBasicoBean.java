@@ -34,7 +34,13 @@ public class UploadBasicoBean implements Serializable {
 
 
             // TODO 1
+            if (uploadedFile.getContentType().equalsIgnoreCase("application/pdf")) {
+                throw new IOException(uploadedFile.getContentType() + " File type is not supported");
+            }
+
+
             // TODO 2 : don't accept html file
+
 
             File file = UtilityFile.write(uploadedFile.getFileName(), uploadedFile.getContents());
 
