@@ -91,4 +91,12 @@ public final class Complex {
     public String toString() {
         return "(" + re + " + " + im + "i)";
     }
+
+    public static void main(String[] args) {
+        Complex complex = new Complex(3,5);
+        Complex complex1 = new Complex(3,8) ;
+
+        Complex complex2 = complex.add(complex1) ;
+        System.out.println(complex2);
+    }
 }

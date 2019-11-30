@@ -16,7 +16,16 @@ public class Changer {
         }
     }
 
+   public boolean addNodeRight(int id, String newValue) {
 
+           String value = map.get(id);
+           if (value == null) {
+               map.put(id, newValue);
+               return true;
+           }
+
+           return false;
+       }
 
 
 }
